@@ -3,8 +3,8 @@ pub mod vector {
 	use std::collections::HashMap;
 	#[derive(Debug)]
 	pub struct Gector <T> {
-		pub val: HashMap<i32, Option<T>>,
-		pub capacity: i32
+		val: HashMap<i32, Option<T>>,
+		capacity: i32
 	}
 	
 	pub fn new<T>() -> Gector <T> {
@@ -16,18 +16,18 @@ pub mod vector {
 		};
 		y
 	}
-	impl<T: std::cmp::PartialEq> Gector<T>{
+	impl<T: std::cmp::PartialEq + std::fmt::Display> Gector<T>{
 		pub fn push(&mut self, value: T) {
-			match self.val.get(&self.capacity) {
+			let s = self.capacity;
+			match self.val.get(&s) {
 				Some(None) => {
 					self.val.insert(self.capacity,Some(value));
-					
-				}
-				None => todo!(),
-				Some(&Some(_)) => {
-					self.val.insert(self.capacity,Some(value));
+				},
+				Some(_) => {
 					self.capacity += 1;
-				}
+					self.val.insert(self.capacity,Some(value));
+				},
+				None => print!("{}",value),
 			}
 		}
 	}
@@ -38,5 +38,7 @@ fn main() {
 	let mut x: Gector<i32> = vector::new();
 	x.push(5);
 	x.push(4);
-	//println!("{:?}",x.val);
+	x.push(3);
+	x.push(1);
+	println!("{:?}",x);
 }
